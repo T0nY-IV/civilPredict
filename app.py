@@ -155,14 +155,14 @@ with nav_col1:
     st.markdown(
         '<div style="display:flex;align-items:center;height:52px;">'
         '<span style="font-size:1.5rem;font-weight:700;color:#1B2A3B;">'
-        '🛠️ Béton<span style="color:#1565C0;">Predict</span></span></div>',
+        'Béton<span style="color:#1565C0;">Predict</span></span></div>',
         unsafe_allow_html=True
     )
 
 with nav_col2:
     active_direct = "primary" if st.session_state.page == "direct" else "secondary"
     if st.button(
-        "📊 Modèle Direct",
+        "Modèle Direct",
         key="nav_direct",
         type=active_direct,
         use_container_width=True
@@ -173,7 +173,7 @@ with nav_col2:
 with nav_col3:
     active_inverse = "primary" if st.session_state.page == "inverse" else "secondary"
     if st.button(
-        "🧪 Modèle Inverse",
+        "Modèle Inverse",
         key="nav_inverse",
         type=active_inverse,
         use_container_width=True
@@ -187,9 +187,9 @@ st.markdown("<hr>", unsafe_allow_html=True)
 # ── Sidebar: contextual model info ───────────────────────────────────────────
 with st.sidebar:
     if st.session_state.page == "direct":
-        st.markdown("### 📊 Modèle Direct")
+        st.markdown("### Modèle Direct")
         st.info("**Gradient Boosting Regressor**  \nEntraîné sur **302 formulations** expérimentales.")
-        st.markdown("#### 🎯 Métriques (test set)")
+        st.markdown("#### Métriques (test set)")
         c1, c2 = st.columns(2)
         with c1:
             st.metric("R²",   "93.8 %")
@@ -197,9 +197,9 @@ with st.sidebar:
         with c2:
             st.metric("RMSE", "3.44 MPa")
     else:
-        st.markdown("### 🧪 Modèle Inverse")
+        st.markdown("### Modèle Inverse")
         st.info("**K-Nearest Neighbors (KNN)**  \nPrédit la composition à partir des performances cibles.")
-        st.markdown("#### 🎯 Métriques globales (test set)")
+        st.markdown("#### Métriques globales (test set)")
         c1, c2 = st.columns(2)
         with c1:
             st.metric("MAE",  "35.85")
@@ -207,7 +207,7 @@ with st.sidebar:
             st.metric("RMSE", "85.09")
 
     st.markdown("---")
-    st.caption("💡 Développé pour l'aide à la formulation en laboratoire et sur chantier.")
+    st.caption("Développé pour l'aide à la formulation en laboratoire et sur chantier.")
 
 
 # ════════════════════════════════════════════════════════════════════════════════
@@ -217,19 +217,19 @@ if st.session_state.page == "direct":
 
     st.markdown("""
     <div class="page-header" style="background: linear-gradient(135deg,#2E7D32,#1B5E20);">
-        <h1>📊 Modèle Direct — Composition ➔ Résistance</h1>
+        <h1>Modèle Direct — Composition ➔ Résistance</h1>
         <p>Prédisez la résistance à la compression du béton à partir de sa formulation de gâchage.</p>
     </div>""", unsafe_allow_html=True)
 
     if direct_model is None:
-        st.error("⚠️ Fichier `concrete_strength_gradient_boosting.pkl` introuvable.")
+        st.error("Fichier `concrete_strength_gradient_boosting.pkl` introuvable.")
     else:
-        st.subheader("🧪 Paramètres de formulation")
+        st.subheader("Paramètres de formulation")
 
         col1, col2 = st.columns(2)
 
         with col1:
-            st.markdown("##### 🧱 Liants & Eau")
+            st.markdown("##### Liants & Eau")
             ciment = st.number_input("Ciment (kg/m³)",
                 min_value=200.0, max_value=540.0, value=350.0, step=10.0,
                 help="Dosage en ciment par m³ de béton.")
@@ -241,7 +241,7 @@ if st.session_state.page == "direct":
                 help="Adjuvant réducteur d'eau.")
 
         with col2:
-            st.markdown("##### 🪨 Granulats & Âge")
+            st.markdown("##### Granulats & Âge")
             granulats_grossiers = st.number_input("Gravier (kg/m³)",
                 min_value=420.0, max_value=1375.0, value=1030.0, step=10.0,
                 help="Dosage en gravier.")
@@ -257,7 +257,7 @@ if st.session_state.page == "direct":
         gs_ratio = granulats_grossiers / granulats_fins if granulats_fins > 0 else 0.0
         masse    = ciment + eau + superplastifiant + granulats_grossiers + granulats_fins
 
-        st.markdown("##### 📈 Ratios & Indicateurs")
+        st.markdown("##### Ratios & Indicateurs")
         r1, r2, r3 = st.columns(3)
         with r1: st.metric("E/C",  f"{ec_ratio:.3f}", help="Rapport Eau/Ciment.")
         with r2: st.metric("G/S",  f"{gs_ratio:.3f}", help="Rapport Gravier/Sable.")
@@ -265,7 +265,7 @@ if st.session_state.page == "direct":
 
         st.markdown("---")
 
-        if st.button("🚀 Prédire la Résistance", use_container_width=True, type="primary"):
+        if st.button("Prédire la Résistance", use_container_width=True, type="primary"):
             input_df = pd.DataFrame([{
                 "Ciment": ciment, "Eau": eau, "Superplastifiant": superplastifiant,
                 "Granulats_grossiers": granulats_grossiers, "Granulats_fins": granulats_fins,
@@ -295,7 +295,7 @@ if st.session_state.page == "direct":
                 <p style="margin-top:14px;font-style:italic;color:#666;">{advice}</p>
             </div>""", unsafe_allow_html=True)
 
-            st.info(f"💡 E/C = **{ec_ratio:.2f}** — âge = **{age} jours** — "
+            st.info(f"E/C = **{ec_ratio:.2f}** — âge = **{age} jours** — "
                     f"résistance estimée : **{strength:.2f} MPa**.")
 
 
@@ -306,14 +306,14 @@ else:
 
     st.markdown("""
     <div class="page-header" style="background: linear-gradient(135deg,#1565C0,#0D47A1);">
-        <h1>🧪 Modèle Inverse — Résistance ➔ Composition</h1>
+        <h1>Modèle Inverse — Résistance ➔ Composition</h1>
         <p>Estimez une formulation de gâchage à partir d'une résistance cible et d'un âge de maturité.</p>
     </div>""", unsafe_allow_html=True)
 
     if inverse_model is None:
-        st.error("⚠️ Fichier `concrete_composition_knn_inverse.pkl` introuvable.")
+        st.error("Fichier `concrete_composition_knn_inverse.pkl` introuvable.")
     else:
-        st.subheader("🎯 Performances ciblées")
+        st.subheader("Performances ciblées")
         st.write("Saisissez les exigences de performance du béton :")
 
         col1, col2 = st.columns(2)
@@ -334,7 +334,7 @@ else:
 
         st.markdown("---")
 
-        if st.button("🚀 Proposer la Formulation", use_container_width=True, type="primary"):
+        if st.button("Proposer la Formulation", use_container_width=True, type="primary"):
             input_inv = pd.DataFrame([[target_strength, target_age]], columns=["Resistance", "Age"])
 
             with st.spinner("Calcul de la composition optimale…"):
@@ -351,20 +351,20 @@ else:
             masse_p      = ciment_p + eau_p + sp_p + gravier_p + sable_p
 
             # ── Composition grid ──────────────────────────────────────────
-            st.subheader("📐 Formulation proposée (par m³)")
+            st.subheader(" Formulation proposée (par m³)")
 
             c1, c2, c3 = st.columns(3)
             with c1:
-                st.metric("🧱 Ciment",           f"{ciment_p:.1f} kg/m³")
-                st.metric("💧 Eau",               f"{eau_p:.1f} kg/m³")
+                st.metric("Ciment",           f"{ciment_p:.1f} kg/m³")
+                st.metric("Eau",               f"{eau_p:.1f} kg/m³")
             with c2:
-                st.metric("🧪 Superplastifiant",  f"{sp_p:.2f} kg/m³")
-                st.metric("🪨 Gravier",           f"{gravier_p:.1f} kg/m³")
+                st.metric("Superplastifiant",  f"{sp_p:.2f} kg/m³")
+                st.metric("Gravier",           f"{gravier_p:.1f} kg/m³")
             with c3:
-                st.metric("🏖️ Sable",             f"{sable_p:.1f} kg/m³")
-                st.metric("⚖️ Masse volumique",   f"{masse_p:.0f} kg/m³")
+                st.metric("Sable",             f"{sable_p:.1f} kg/m³")
+                st.metric("Masse volumique",   f"{masse_p:.0f} kg/m³")
 
-            st.markdown("##### 📈 Ratios théoriques")
+            st.markdown("##### Ratios théoriques")
             r1, r2 = st.columns(2)
             with r1: st.metric("Rapport E/C", f"{ec_p:.3f}",
                                delta=f"{ec_p - (eau_p/ciment_p if ciment_p>0 else 0):.3f}",
@@ -375,10 +375,10 @@ else:
 
             # ── Double validation ─────────────────────────────────────────
             st.markdown("---")
-            st.subheader("🔍 Validation par le Modèle Direct")
+            st.subheader("Validation par le Modèle Direct")
 
             if direct_model is None:
-                st.warning("⚠️ Modèle direct introuvable — validation impossible.")
+                st.warning("Modèle direct introuvable — validation impossible.")
             else:
                 val_df = pd.DataFrame([{
                     "Ciment": ciment_p, "Eau": eau_p, "Superplastifiant": sp_p,
@@ -410,7 +410,7 @@ else:
                 </div>""", unsafe_allow_html=True)
 
                 st.info(
-                    "💡 **Interprétation :** La formulation proposée est basée sur les 5 voisins les plus "
+                    "**Interprétation :** La formulation proposée est basée sur les 5 voisins les plus "
                     "proches dans les données historiques. La validation croisée (Gradient Boosting, R² = 93.8 %) "
                     "confirme sa cohérence physique. Un écart < 3 MPa indique une excellente cohérence."
                 )
